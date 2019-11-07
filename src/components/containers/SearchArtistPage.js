@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Search from '../searches/Search';
 import PagingButtons from '../paging/PagingButtons';
 import Artists from '../artists/Artists';
@@ -10,6 +10,7 @@ const SearchArtistPage = () => {
   const [page, updatePage] = useState(0);
   const [upDisabled, updateUpDisabled] = useState(true);
   const [downDisabled, updateDownDisabled] = useState(true);
+  const didMountRef = useRef(false);
 
   const handleChange = (event) => {
     updateSearchInput(event.target.value);
@@ -35,10 +36,14 @@ const SearchArtistPage = () => {
   };
 
   useEffect(() => {
-    getArtists(searchInput, page)
-      .then(result => {
-        updateArtists(result); 
-      });
+    if(didMountRef.current) {
+      getArtists(searchInput, page)
+        .then(result => {
+          updateArtists(result); 
+        });
+    } else {
+      didMountRef.current = true;
+    }
 
     return updateDownDisabled(page == 0);
   }, [page]);
