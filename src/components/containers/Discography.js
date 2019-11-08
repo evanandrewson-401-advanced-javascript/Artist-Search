@@ -1,33 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PagingButtons from '../paging/PagingButtons';
 import Albums from '../music/Albums';
-import getAlbums from '../services/getAlbums';
 import PropTypes from 'prop-types';
+import useAlbums from '../../hooks/useAlbums';
+import usePaging from '../../hooks/usePaging';
 
 const Discography = ({ match }) => {
-  const [albums, updateAlbums] = useState([]);
-  const [page, updatePage] = useState(0);
-  const [upDisabled, updateUpDisabled] = useState(true);
-  const [downDisabled, updateDownDisabled] = useState(true);
-  
-  const pageUpFunction = () => {
-    updatePage(page + 1);
-    updateDownDisabled(false);
-  };
+  const { page, updatePage, pageUpFunction, pageDownFunction, upDisabled, downDisabled } = usePaging();
+  const albums = useAlbums(match.params.id, page);
 
-  const pageDownFunction = () => {
-    updatePage(page - 1);
-  };
-
-  useEffect(() => {
-    getAlbums(match.params.id, page)
-      .then(result => {
-        updateAlbums(result);
-        updateUpDisabled(false);
-      });
-
-    return updateDownDisabled(page == 0);
-  }, [page]);
+  if(page === undefined) updatePage(0);
 
   return (
     <>
