@@ -1,15 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Recordings from '../recordings/Recordings';
-import getSongs from '../services/getSongs';
+import useSongs from '../../hooks/useSongs';
 
 const RecordPage = ({ match }) => {
-  const [songs, updateSongs] = useState([]);
-
-  useEffect(() => {
-    getSongs(match.params.albumId)
-      .then(result => updateSongs(result));
-  }, []);
+  const songs = useSongs(match.params.albumId);
 
   return (
     <>
