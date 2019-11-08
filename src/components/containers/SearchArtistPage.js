@@ -1,26 +1,23 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import Search from '../searches/Search';
 import PagingButtons from '../paging/PagingButtons';
 import Artists from '../artists/Artists';
 // import getArtists from '../services/getArtists';
 import useArtists from '../../hooks/useArtists';
+import usePaging from '../../hooks/usePaging';
 
 const SearchArtistPage = () => {
   const [searchInput, updateSearchInput] = useState('');
   // const [artists, updateArtists] = useState([]);
-  const [page, updatePage] = useState();
-  const [upDisabled, updateUpDisabled] = useState(true);
-  const [downDisabled, updateDownDisabled] = useState(true);
-  const didMountRef = useRef(false);
-  const artists = useArtists(didMountRef, searchInput, page, updateDownDisabled);
+  const { page, updatePage, pageUpFunction, pageDownFunction, upDisabled, downDisabled } = usePaging();
+  const artists = useArtists(searchInput, page);
 
   const handleChange = (event) => {
     updateSearchInput(event.target.value);
   };
 
   const handleSubmit = (event) => {
-    event.preventDefault();
-    updateUpDisabled(false);
+    event.preventDefault();  
     updatePage(0);
     // getArtists(searchInput, 0)
     //   .then(result => { 
@@ -29,28 +26,6 @@ const SearchArtistPage = () => {
     //     updatePage(0); 
     //   });
   };
-
-  const pageUpFunction = () => {
-    updatePage(page + 1);
-    updateDownDisabled(false);
-  };
-
-  const pageDownFunction = () => {
-    updatePage(page - 1);
-  };
-
-  // useEffect(() => {
-  //   if(didMountRef.current) {
-  //     getArtists(searchInput, page)
-  //       .then(result => {
-  //         updateArtists(result); 
-  //       });
-  //   } else {
-  //     didMountRef.current = true;
-  //   }
-
-  //   return updateDownDisabled(page == 0);
-  // }, [page]);
 
   return (
     <>
