@@ -2,15 +2,17 @@ import React, { useState, useEffect, useRef } from 'react';
 import Search from '../searches/Search';
 import PagingButtons from '../paging/PagingButtons';
 import Artists from '../artists/Artists';
-import getArtists from '../services/getArtists';
+// import getArtists from '../services/getArtists';
+import useArtists from '../../hooks/useArtists';
 
 const SearchArtistPage = () => {
   const [searchInput, updateSearchInput] = useState('');
-  const [artists, updateArtists] = useState([]);
-  const [page, updatePage] = useState(0);
+  // const [artists, updateArtists] = useState([]);
+  const [page, updatePage] = useState();
   const [upDisabled, updateUpDisabled] = useState(true);
   const [downDisabled, updateDownDisabled] = useState(true);
   const didMountRef = useRef(false);
+  const artists = useArtists(didMountRef, searchInput, page, updateDownDisabled);
 
   const handleChange = (event) => {
     updateSearchInput(event.target.value);
@@ -18,12 +20,14 @@ const SearchArtistPage = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    getArtists(searchInput, 0)
-      .then(result => { 
-        updateArtists(result); 
-        updateUpDisabled(false);
-        updatePage(0); 
-      });
+    updateUpDisabled(false);
+    updatePage(0);
+    // getArtists(searchInput, 0)
+    //   .then(result => { 
+    //     updateArtists(result); 
+    //     updateUpDisabled(false);
+    //     updatePage(0); 
+    //   });
   };
 
   const pageUpFunction = () => {
@@ -35,18 +39,18 @@ const SearchArtistPage = () => {
     updatePage(page - 1);
   };
 
-  useEffect(() => {
-    if(didMountRef.current) {
-      getArtists(searchInput, page)
-        .then(result => {
-          updateArtists(result); 
-        });
-    } else {
-      didMountRef.current = true;
-    }
+  // useEffect(() => {
+  //   if(didMountRef.current) {
+  //     getArtists(searchInput, page)
+  //       .then(result => {
+  //         updateArtists(result); 
+  //       });
+  //   } else {
+  //     didMountRef.current = true;
+  //   }
 
-    return updateDownDisabled(page == 0);
-  }, [page]);
+  //   return updateDownDisabled(page == 0);
+  // }, [page]);
 
   return (
     <>
