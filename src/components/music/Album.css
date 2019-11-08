@@ -1,0 +1,12 @@
+.Album {
+
+  background-color: #eeeeee;
+  text-align: center;
+  padding: 5px;
+  margin: 10px;
+  border-radius: 5px;
+
+  img {
+    width: 100%;
+  }
+}

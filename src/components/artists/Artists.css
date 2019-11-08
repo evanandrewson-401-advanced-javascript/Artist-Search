@@ -1,0 +1,16 @@
+.Artists {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  max-width: 80%;
+  margin: auto;
+  padding-top: 20px;
+  margin-bottom: 90px;
+  justify-content: center;
+
+  li {
+    width: 25%;
+    min-height: 200px;
+    margin: 10px;
+  }
+}

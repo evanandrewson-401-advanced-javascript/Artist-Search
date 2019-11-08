@@ -1,0 +1,12 @@
+.Albums {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  max-width: 80%;
+  margin: auto;
+  padding-top: 20px;
+
+  li {
+    width: 25%;
+  }
+}

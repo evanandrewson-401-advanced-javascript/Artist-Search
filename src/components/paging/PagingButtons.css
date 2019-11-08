@@ -1,0 +1,11 @@
+.PagingButtons {
+  display: flex;
+  justify-content: space-evenly;
+
+  button {
+    width: 25%;
+    height: 50px;
+    font-size: 20pt;
+    border-radius: 5px;
+  }
+}

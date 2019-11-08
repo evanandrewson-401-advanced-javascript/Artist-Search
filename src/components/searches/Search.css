@@ -1,0 +1,19 @@
+.Search {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+
+  input {
+    width: 30%;
+    height: 30px;
+    font-size: 15pt;
+    margin-right: 20px;
+    border-radius: 5px;
+  }
+
+  button {
+    width: 25%;
+    border-radius: 5px;
+    font-size: 20pt;
+  }
+}
